@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Website Detection</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">
+                <i class="fas fa-shield-alt me-2"></i>PhishGuard
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#aboutModal">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center mb-4">
+                <h1 class="display-4 fw-bold text-primary mb-3">Phishing URL Detector</h1>
+                <p class="lead text-muted">Leveraging Machine Learning to identify malicious links before you click.</p>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg border-0 rounded-lg">
+                    <div class="card-body p-5">
+                        {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle me-2"></i> {{ error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endif %}
+                        
+                        <form action="/predict" method="POST">
+                            <div class="mb-4">
+                                <label for="url" class="form-label h5 text-secondary">Enter URL to analyze:</label>
+                                <div class="input-group input-group-lg shadow-sm">
+                                    <span class="input-group-text bg-light"><i class="fas fa-link text-muted"></i></span>
+                                    <input type="text" class="form-control" id="url" name="url" 
+                                           placeholder="e.g., https://www.example.com" required 
+                                           autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg shadow-sm">
+                                    <i class="fas fa-search me-2"></i>Analyze URL
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <!-- Information Cards -->
+                <div class="row mt-5 text-center">
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-0 shadow-sm h-100 feature-card">
+                            <div class="card-body">
+                                <i class="fas fa-robot fa-3x text-primary mb-3"></i>
+                                <h5>ML Powered</h5>
+                                <p class="text-muted small">Trained on thousands of real-world URLs.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-0 shadow-sm h-100 feature-card">
+                            <div class="card-body">
+                                <i class="fas fa-bolt fa-3x text-warning mb-3"></i>
+                                <h5>Real-time Analysis</h5>
+                                <p class="text-muted small">Extracts 15+ lexical features instantly.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card border-0 shadow-sm h-100 feature-card">
+                            <div class="card-body">
+                                <i class="fas fa-lock fa-3x text-success mb-3"></i>
+                                <h5>Safe Browsing</h5>
+                                <p class="text-muted small">Protects against credential theft.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">About PhishGuard</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>This is a final-year diploma project demonstrating the application of Machine Learning in cybersecurity.</p>
+                    <p><strong>Model:</strong> Logistic Regression / Ensemble methods</p>
+                    <p><strong>Features:</strong> Analyzes URL length, presence of IPs, suspicious keywords, and more.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-3 text-center text-muted mt-5">
+        <div class="container">
+            <small>&copy; 2024 Phishing Website Detection Project.</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
