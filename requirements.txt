@@ -8,3 +8,4 @@ seaborn
 python-whois
 requests
 jinja2
+gunicorn
